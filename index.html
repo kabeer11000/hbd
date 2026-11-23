@@ -117,14 +117,27 @@ this is definaly not me lovebombing u and please dont b icked out hehe
 </center>
 
 <!-- adakaari in the bg -->
-<audio id="music" src="song.mp3" loop></audio>
+<audio id="music" src="song.mp3"></audio>
 
 <script>
 // browsers dont let music autoplay so it starts on the first click/tap anywhere
+// starts from 30s (the good part)
 var music = document.getElementById("music");
 music.volume = 0.5;
-document.addEventListener("click", function() { music.play(); }, { once: true });
-document.addEventListener("touchstart", function() { music.play(); }, { once: true });
+var started = false;
+function startMusic() {
+  if (started) return;
+  started = true;
+  music.currentTime = 30;
+  music.play();
+}
+document.addEventListener("click", startMusic);
+document.addEventListener("touchstart", startMusic);
+// when it ends go back to 30s again
+music.addEventListener("ended", function() {
+  music.currentTime = 30;
+  music.play();
+});
 
 var clicks = 0;
 var msgs = ["again", "again!!", "one more", "ok last one", "i like u btw"];
